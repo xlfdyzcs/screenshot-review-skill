@@ -62,22 +62,16 @@
     },
     "docs/images/overview.jpg": {
       "pixelSize": [
-        1440,
-        500
+        1280,
+        720
       ],
-      "sha256": "41ceb4220ab2c922d675871997ad756144b9446838fcc7d160ed41e6d0971b60",
+      "sha256": "64e816c785167ee092639683d63ece33ac94263e9d8dd8e1d0a03b9f2c78cfb0",
       "viewport": [
-        1440,
-        1000
+        1280,
+        720
       ],
       "case": "overview",
-      "view": "thumbnail-overview",
-      "clip": {
-        "x": 0,
-        "y": 0,
-        "width": 1440,
-        "height": 500
-      }
+      "view": "thumbnail-overview"
     },
     "docs/images/mobile-review.jpg": {
       "pixelSize": [
