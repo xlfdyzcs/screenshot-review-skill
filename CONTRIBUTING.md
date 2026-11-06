@@ -8,7 +8,9 @@ screenshot-review/       可直接安装的独立技能
   scripts/               标准库生成器与 Windows 启动入口
   references/            截图采集及清单说明
 docs/                    使用及分发说明
+  images/                六张虚构示例实拍及来源哈希
 examples/create_demo.py  生成本地抽象色块示例
+examples/fictional-app.html  专门拍摄文档截图的虚构任务应用
 tests/                   生成器、状态及分发边界回归
 scripts/                 检查和构建安装包
 ```
@@ -47,5 +49,7 @@ python scripts/build_release.py
 输出 `dist/screenshot-review-v<VERSION>.zip` 与 `dist/SHA256SUMS.txt`。ZIP 根目录是 `screenshot-review/`，仅包含安装所需的九个文本资源，不包含业务图片或审阅记录。ZIP 条目使用固定时间戳和权限，便于在相同源码下重复校验。
 
 发布到与 `VERSION` 一致的 GitHub tag，在 Release 中附上这两个文件，并说明实际测试范围。不要把 `output/`、`build/`、完整项目目录或业务审阅 ZIP 当作安装附件上传。
+
+文档图只允许使用 `examples/fictional-app.html` 生成的虚构页面，在审阅工具中真实操作后截图。更新六张文档图时同步更新 `docs/images/provenance.json` 的源码哈希、图片尺寸与哈希，逐张检查后运行分发测试。完整采集目录和审阅包留在本地，安装 ZIP 不收录文档图。
 
 新增分发文件时同时更新白名单及相关测试，检查[隐私边界](docs/PRIVACY.md)。

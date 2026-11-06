@@ -1,0 +1,109 @@
+{
+  "kind": "fictional-demo",
+  "created": "2026-11-06",
+  "description": "Luma Board is a purpose-built fictional task application. All app content, task data and review feedback are invented for documentation.",
+  "source": {
+    "file": "examples/fictional-app.html",
+    "sha256": "e4e2950d073007aba007d32559e03e085c871c4f48f653772fd549adc94c6169",
+    "externalAssets": false,
+    "realProjectAssets": false
+  },
+  "capture": {
+    "method": "Actual browser screenshots of the screenshot-review viewer displaying newly rendered fictional pages",
+    "appViewport": [
+      430,
+      860
+    ],
+    "appCapturePixels": [
+      415,
+      830
+    ],
+    "imageEditing": "JPEG-to-PNG format conversion for capture inputs only; documentation JPEG screenshots remain unedited"
+  },
+  "images": {
+    "docs/images/compare-desktop.jpg": {
+      "pixelSize": [
+        1440,
+        1000
+      ],
+      "sha256": "7f1da74a2e94c2fe4803230d35b76fce1b907275447e535df27b518e045624d4",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "case": "A01-01",
+      "view": "side-by-side"
+    },
+    "docs/images/annotations.jpg": {
+      "pixelSize": [
+        1440,
+        1000
+      ],
+      "sha256": "13177548cc659d65c98301eec2e76d936818d0995217e5f5ded9dbc0575c45b3",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "case": "A01-01",
+      "view": "pin-and-annotations"
+    },
+    "docs/images/overlay.jpg": {
+      "pixelSize": [
+        1440,
+        1000
+      ],
+      "sha256": "5e8442710c06526c611911598a285c908cd4ea152d3c8170c57156edb5969475",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "case": "A03-01",
+      "view": "overlay-50-percent"
+    },
+    "docs/images/overview.jpg": {
+      "pixelSize": [
+        1440,
+        500
+      ],
+      "sha256": "41ceb4220ab2c922d675871997ad756144b9446838fcc7d160ed41e6d0971b60",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "case": "overview",
+      "view": "thumbnail-overview",
+      "clip": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 500
+      }
+    },
+    "docs/images/mobile-review.jpg": {
+      "pixelSize": [
+        390,
+        844
+      ],
+      "sha256": "786eda21fb08bc2f8dd8036441871e9f5282588cd4fd94e8816b3581cc18bd1f",
+      "viewport": [
+        390,
+        844
+      ],
+      "case": "A01-01",
+      "view": "mobile-side-by-side"
+    },
+    "docs/images/mobile-notes.jpg": {
+      "pixelSize": [
+        390,
+        844
+      ],
+      "sha256": "259fbe3929b1a3ceaa1ba76682b59821ab52d3f81bb7ec3f11bf1bdd4e278679",
+      "viewport": [
+        390,
+        844
+      ],
+      "case": "A01-01",
+      "view": "mobile-annotations"
+    }
+  }
+}

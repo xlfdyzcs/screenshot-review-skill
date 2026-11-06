@@ -1,6 +1,9 @@
 """Regressions for excluding captures, encoded images and unapproved release files."""
 
 import importlib.util
+import hashlib
+import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -50,6 +53,42 @@ class DistributionTest(unittest.TestCase):
         self.assertEqual(distribution.validate_archive(self.write_archive()), len(distribution.SKILL_FILES))
         with self.assertRaisesRegex(ValueError, 'exactly'):
             distribution.validate_archive(self.write_archive(extra=True))
+
+    def copy_documentation_fixture(self):
+        name = 'docs/images/annotations.jpg'
+        for relative in [name, 'docs/images/provenance.json', 'examples/fictional-app.html']:
+            path = self.root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(ROOT / relative, path)
+        return name
+
+    def test_only_documented_image_with_matching_source_and_hash_is_allowed(self):
+        name = self.copy_documentation_fixture()
+        self.assertEqual(distribution.validate_paths(self.root, [name], require_all=False), 1)
+        path = self.root / name
+        path.write_bytes(path.read_bytes()[:-2] + b'XX')
+        with self.assertRaisesRegex(ValueError, 'hash mismatch'):
+            distribution.validate_paths(self.root, [name], require_all=False)
+
+    def test_image_metadata_rejected_even_when_inventory_hash_matches(self):
+        name = self.copy_documentation_fixture()
+        path = self.root / name
+        content = path.read_bytes()
+        content = content[:2] + b'\xff\xe1\x00\x08Exif\x00\x00' + content[2:]
+        path.write_bytes(content)
+        provenance = self.root / 'docs/images/provenance.json'
+        inventory = json.loads(provenance.read_text(encoding='utf-8'))
+        inventory['images'][name]['sha256'] = hashlib.sha256(content).hexdigest()
+        provenance.write_text(json.dumps(inventory), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'metadata'):
+            distribution.validate_paths(self.root, [name], require_all=False)
+
+    def test_changed_demo_source_requires_new_image_provenance(self):
+        name = self.copy_documentation_fixture()
+        source = self.root / 'examples/fictional-app.html'
+        source.write_bytes(source.read_bytes() + b'<!-- changed -->')
+        with self.assertRaisesRegex(ValueError, 'source hash'):
+            distribution.validate_paths(self.root, [name], require_all=False)
 
     def test_build_release_is_repeatable_and_contains_no_capture(self):
         command = [sys.executable, str(ROOT / 'scripts/build_release.py'), '--output', str(self.root)]

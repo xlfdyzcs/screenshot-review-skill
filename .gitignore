@@ -17,6 +17,12 @@ dist/
 *.sketch
 *.psd
 *.zip
+!docs/images/compare-desktop.jpg
+!docs/images/annotations.jpg
+!docs/images/overlay.jpg
+!docs/images/overview.jpg
+!docs/images/mobile-review.jpg
+!docs/images/mobile-notes.jpg
 *批注备份*.json
 *复查意见*.md
 .DS_Store

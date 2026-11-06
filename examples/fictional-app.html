@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Luma Board · 虚构演示应用</title>
+<style>
+:root { --ink:#1f3530; --muted:#74817d; --accent:#27735f; --soft:#e4f1e9; --bg:#f7f8f4; }
+* { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--bg); font:14px/1.55 system-ui,"Microsoft YaHei",sans-serif; }
+body.before { --ink:#34414f; --muted:#7b8490; --accent:#62758b; --soft:#edf0f4; --bg:#f5f6f8; }
+h1,h2,h3,p { margin:0; } button { font:inherit; border:0; cursor:pointer; }
+.demo { height:27px; display:flex; justify-content:center; align-items:center; font-size:10px; letter-spacing:.13em; background:#243b34; color:#edf6ed; }
+.app { max-width:600px; margin:auto; min-height:100vh; padding-bottom:90px; }
+header { display:flex; justify-content:space-between; align-items:center; padding:22px 24px; }
+.identity { display:flex; align-items:center; gap:10px; font-size:16px; font-weight:750; letter-spacing:-.5px; }
+.logo { width:31px; height:31px; border-radius:11px; background:var(--accent); color:white; display:grid; place-items:center; font-family:Georgia,serif; font-size:23px; }
+.avatar { display:grid; place-items:center; width:31px; height:31px; border:1px solid #dbe4dc; border-radius:50%; color:var(--accent); font-size:11px; background:#fff; }
+main { padding:2px 24px 24px; } .eyebrow { font-size:10px; text-transform:uppercase; letter-spacing:.17em; color:var(--muted); margin-bottom:9px; }
+h1 { font-size:29px; line-height:1.3; letter-spacing:-1px; font-weight:730; } .lede { margin-top:10px; color:var(--muted); font-size:12px; }
+.hero { position:relative; overflow:hidden; background:#e8f0df; padding:22px; border-radius:21px; margin-top:24px; min-height:143px; }
+.hero h2 { font-size:21px; line-height:1.35; letter-spacing:-.7px; position:relative; z-index:1; }
+.hero p { font-size:11px; color:#6b7d65; margin-top:7px; } .hero .leaf { position:absolute; width:95px; height:120px; right:20px; top:10px; border-radius:95px 0 95px 0; background:#bacd9d; transform:rotate(-20deg); opacity:.7; }
+.hero .leaf.two { background:#93b186; width:70px; height:95px; top:58px; right:-15px; transform:rotate(20deg); }
+.hero .hero-tag { margin-top:13px; font-size:10px; border:1px solid #c4d4b6; border-radius:20px; display:inline-block; padding:3px 9px; }
+.stats { display:grid; grid-template-columns:repeat(3,1fr); margin:20px 0; border:1px solid #e4e9df; background:#fff; padding:16px 0; border-radius:16px; }
+.stats div { padding-left:18px; border-right:1px solid #edf0e9; } .stats div:last-child { border:0; } .stats strong { font-size:24px; font-weight:680; line-height:1; } .stats span { display:block; font-size:10px; color:var(--muted); margin-top:7px; }
+.section-head { display:flex; align-items:center; justify-content:space-between; margin:24px 0 12px; } .section-head h2 { font-size:16px; letter-spacing:-.4px; } .section-head span { font-size:10px; color:var(--accent); }
+.tabs { display:flex; gap:6px; margin-bottom:12px; } .tabs span { padding:5px 12px; color:var(--muted); font-size:11px; border-radius:8px; } .tabs .active { color:var(--accent); background:var(--soft); font-weight:650; }
+.task { display:flex; align-items:center; gap:11px; border:1px solid #e7ebe3; border-radius:14px; background:#fff; padding:15px; margin:9px 0; }
+.check { width:18px; height:18px; border-radius:6px; border:1.5px solid #ccd9ce; color:var(--accent); font-size:11px; display:grid; place-items:center; flex-shrink:0; }
+.task h3 { font-size:12px; font-weight:620; } .task p { font-size:10px; color:var(--muted); margin-top:3px; } .task .category { margin-left:auto; padding:3px 6px; font-size:9px; border-radius:5px; background:#f5f3eb; color:#9c8860; }
+.task .category.green { color:var(--accent); background:var(--soft); } .task.done h3 { color:#8b9790; text-decoration:line-through; } .task.done .check { color:#fff; background:var(--accent); border-color:var(--accent); }
+.add { display:block; width:100%; border-radius:11px; color:white; background:var(--accent); padding:12px; margin-top:17px; font-weight:600; font-size:12px; }
+.project { background:#fff; border:1px solid #e7ebe3; border-radius:16px; padding:17px; margin:10px 0; }
+.project-row { display:flex; align-items:center; justify-content:space-between; gap:10px; } .project h3 { font-size:12px; } .project small { font-size:10px; color:var(--muted); } .bar { height:5px; background:#edf0e8; border-radius:5px; overflow:hidden; margin:14px 0 9px; } .bar i { display:block; height:100%; width:65%; background:#9fbd84; border-radius:5px; }
+.callout { font-size:11px; border:1px dashed #d7e2d1; padding:15px; border-radius:12px; color:var(--muted); margin-top:20px; text-align:center; }
+footer { margin:28px 0 10px; font-size:9px; color:#98a29a; text-align:center; letter-spacing:.08em; }
+.bottom { position:fixed; bottom:0; left:0; right:0; border-top:1px solid #e3e8df; display:flex; justify-content:space-around; align-items:center; background:#ffffffee; padding:12px 0 16px; z-index:5; backdrop-filter:blur(6px); }
+.bottom div { display:flex; flex-direction:column; align-items:center; gap:4px; color:#9aa49c; font-size:9px; } .bottom b { font-size:17px; font-weight:500; line-height:1; } .bottom .selected { color:var(--accent); }
+.back { font-size:22px; margin-right:5px; } .detail-label { display:inline-block; color:var(--accent); background:var(--soft); padding:4px 9px; font-size:10px; border-radius:7px; margin:21px 0 12px; }
+.detail-title { font-size:28px; } .metadata { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0; padding-bottom:22px; border-bottom:1px solid #e5e9df; } .metadata span { display:block; font-size:10px; color:var(--muted); margin-bottom:6px; } .metadata b { font-size:12px; font-weight:600; }
+.description { font-size:12px; line-height:1.9; color:#6d7d73; } .detail-check { border-radius:10px; padding:12px; } .detail-check h3 { font-size:12px; }
+.setting-group { margin-top:23px; background:#fff; border:1px solid #e5eade; border-radius:15px; overflow:hidden; } .setting { padding:18px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #edf0e8; } .setting:last-child { border:0; } .setting h3 { font-size:12px; } .setting p { font-size:10px; color:var(--muted); margin-top:3px; }
+.switch { width:34px; height:20px; border-radius:16px; background:var(--accent); padding:3px; display:flex; justify-content:flex-end; } .switch i { width:14px; height:14px; border-radius:50%; background:white; } .switch.off { background:#dce2dc; justify-content:flex-start; }
+.empty { text-align:center; margin-top:90px; } .empty-mark { width:104px; height:104px; border-radius:35px; background:var(--soft); color:var(--accent); margin:0 auto 22px; display:grid; place-items:center; font-size:43px; transform:rotate(-8deg); } .empty h2 { font-size:21px; } .empty p { font-size:12px; color:var(--muted); margin-top:10px; line-height:1.9; }
+.before h1 { font-size:24px; } .before .hero { background:#e9edf3; border-radius:10px; min-height:115px; padding:18px; } .before .hero h2 { font-size:18px; } .before .hero p { color:#7b8590; } .before .hero .leaf { display:none; } .before .hero-tag { display:none; } .before .stats { border-radius:8px; padding:12px 0; margin:17px 0; } .before .stats strong { font-size:21px; } .before .task { padding:12px; border-radius:7px; margin:7px 0; } .before .task h3 { font-size:11px; } .before .task .category { border-radius:2px; } .before .add { border-radius:6px; background:#62758b; padding:9px; } .before .project { border-radius:7px; } .before .setting-group { border-radius:7px; } .before .setting { padding:15px 12px; }
+</style>
+</head>
+<body>
+<div class="demo">FICTIONAL DEMO · 虚构数据，仅供文档演示</div>
+<div class="app"><header><div class="identity"><span class="logo">l</span>Luma Board</div><span class="avatar">DEMO</span></header><main id="page"></main><nav class="bottom"><div class="selected"><b>⌂</b>工作台</div><div><b>▦</b>项目</div><div><b>◷</b>日程</div><div><b>☷</b>设置</div></nav></div>
+<script>
+const query=new URLSearchParams(location.search);
+const before=query.get('revision')==='before';
+document.body.classList.toggle('before',before);
+const screen=query.get('screen')||'overview';
+const task=(title,time,category='日常',done=false)=>`<div class="task ${done?'done':''}"><span class="check">${done?'✓':''}</span><div><h3>${title}</h3><p>${time}</p></div><span class="category ${category==='灵感'?'green':''}">${category}</span></div>`;
+const project=(title,amount,percent)=>`<div class="project"><div class="project-row"><h3>${title}</h3><small>${amount}</small></div><div class="bar"><i style="width:${percent}%"></i></div><div class="project-row"><small>按自己的节奏前进</small><small>${percent}%</small></div></div>`;
+const footer='<footer>LUMA BOARD · FICTIONAL DOCUMENTATION DEMO</footer>';
+const views={
+overview:`<div class="eyebrow">YOUR SPACE, YOUR PACE</div><h1>${before?'今天的工作台':'把今天留给<br>重要的事。'}</h1><p class="lede">留一点空间，让每一个小进步被看见。</p><div class="hero"><i class="leaf"></i><i class="leaf two"></i><h2>从一件小事开始，<br>让灵感慢慢生长。</h2><p>你的专注时光，正在这里发生。</p><span class="hero-tag">本周主题 · 轻松前进</span></div><div class="stats"><div><strong>12</strong><span>本周任务</span></div><div><strong>08</strong><span>已经完成</span></div><div><strong>03</strong><span>进行中的项目</span></div></div><div class="section-head"><h2>今天的计划</h2><span>查看全部 ↗</span></div><div class="tabs"><span class="active">全部</span><span>待完成</span><span>已完成</span></div>${task('整理本周灵感清单','今天 · 09:30','灵感')}${task('给窗边的植物浇水','今天 · 12:00')}${task('读完一篇喜欢的文章','今天 · 16:00','阅读')}${task('记录一个微小的发现','已完成 · 今天','灵感',true)}<button class="add">＋ 添加一件小事</button><div class="section-head"><h2>正在生长的项目</h2><span>3 个项目</span></div>${project('一周灵感采集', '4 / 6 项',67)}${project('慢慢读一本书', '2 / 8 项',25)}${project('阳台小花园', '5 / 7 项',71)}<div class="callout">今天也记得，给自己留一点空白。</div>${footer}`,
+detail:`<div class="eyebrow">TASK DETAIL · 任务详情</div><span class="detail-label">灵感采集 / 今日计划</span><h1 class="detail-title">整理本周<br>灵感清单</h1><p class="lede">把零散的想法，变成可以回看的片段。</p><div class="metadata"><div><span>计划时间</span><b>今天 09:30</b></div><div><span>优先级</span><b>轻松完成</b></div><div><span>所属项目</span><b>一周灵感采集</b></div><div><span>任务状态</span><b>进行中</b></div></div><div class="section-head"><h2>任务说明</h2></div><p class="description">记录本周让你停留的一句话、一种配色或一个小小的想法。先收集，再整理，不急着给灵感下定义。</p><div class="section-head"><h2>分成几个小步骤</h2><span>1 / 3 已完成</span></div>${task('写下三个关键词','预计 5 分钟','灵感',true)}${task('挑选最喜欢的一条','预计 10 分钟','灵感')}${task('保存到个人灵感盒','预计 5 分钟','灵感')}<button class="add">标记为已完成</button><div class="callout">这些内容全部为虚构演示数据。</div>${footer}`,
+settings:`<div class="eyebrow">MAKE ROOM FOR YOURSELF</div><h1>让提醒，<br>刚刚好。</h1><p class="lede">选择适合自己的节奏，减少不必要的打扰。</p><div class="section-head"><h2>通知偏好</h2></div><div class="setting-group"><div class="setting"><div><h3>每日计划提醒</h3><p>每天 09:00，给今天一个轻松的开始</p></div><span class="switch"><i></i></span></div><div class="setting"><div><h3>任务到期提示</h3><p>在计划时间前 15 分钟提醒</p></div><span class="switch"><i></i></span></div><div class="setting"><div><h3>每周回顾</h3><p>周日看看这一周的小进步</p></div><span class="switch off"><i></i></span></div></div><div class="section-head"><h2>专注模式</h2><span>已启用</span></div><div class="setting-group"><div class="setting"><div><h3>安静时段</h3><p>22:00 — 08:00 暂停所有提醒</p></div><span class="switch"><i></i></span></div><div class="setting"><div><h3>轻柔提示音</h3><p>柔和的声音，温和地提醒</p></div><span class="switch off"><i></i></span></div></div><button class="add">保存偏好</button><div class="callout">仅为界面演示，不发送通知、不连接任何账号。</div>${footer}`,
+empty:`<div class="eyebrow">A LITTLE ROOM FOR IDEAS</div><h1>灵感盒</h1><p class="lede">收藏那些让你眼睛一亮的小片段。</p><div class="empty"><div class="empty-mark">✧</div><h2>你的下一次灵感，<br>可以从这里开始。</h2><p>一句话、一种颜色，或一个小小的发现。<br>先放进来，再慢慢整理。</p></div><button class="add">＋ 收集第一个灵感</button>${footer}`,
+};
+document.getElementById('page').innerHTML=views[screen]||views.overview;
+</script>
+</body>
+</html>

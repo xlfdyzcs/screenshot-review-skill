@@ -6,6 +6,24 @@
 
 本仓库维护工具源码、文档和可自动生成的通用示例。实际项目的设计图、开发截图、审阅记录及批注不随技能分发。
 
+## 界面实拍
+
+以下图片是本工具的实际浏览器截图，图中的 **Luma Board 是专门为文档制作的虚构任务应用**。应用名称、界面、数据与意见均为演示内容，未使用真实项目素材。
+
+**左右对照：** 收起批注后，两张图优先使用工作区；目录、分段、同步滚动、缩放和导出操作保持可见。
+
+![使用虚构 Luma Board 页面进行左右截图对照](docs/images/compare-desktop.jpg)
+
+**标点与批注：** 点击截图添加标记，右侧独立展开意见面板；有意见后自动转为“需要修改”。
+
+![标点、右侧批注面板和需要修改状态](docs/images/annotations.jpg)
+
+**快速浏览：** 全部缩略图展示页面与分段；新增页面的旧版图保留空缺。
+
+![全部页面缩略图与新增页的真实空缺](docs/images/overview.jpg)
+
+[继续查看叠加比对与手机操作说明 →](docs/SCREENSHOTS.md)
+
 ## 功能
 
 - 左右对照、透明叠加、原图预览和全部缩略图。
@@ -98,6 +116,7 @@ python screenshot-review/scripts/review.py serve --root output/demo/v1
 ## 文档与开发
 
 - [使用、升级与问题处理](docs/USAGE.md)
+- [六张功能实拍与示例来源](docs/SCREENSHOTS.md)
 - [截图采集与清单格式](screenshot-review/references/capture.md)
 - [发布内容与隐私边界](docs/PRIVACY.md)
 - [开发、验证与发布](CONTRIBUTING.md)
@@ -111,3 +130,5 @@ python scripts/build_release.py
 ```
 
 发布脚本按固定清单生成只有技能文本资源的安装包；源码仓库、安装包都经过分发检查。CI 使用相同命令验证。
+
+文档中另有 6 张明确列出的虚构示例实拍图，带尺寸、SHA-256 和源码来源记录；这些说明图不进入技能安装 ZIP。
