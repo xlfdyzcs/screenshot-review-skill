@@ -1,0 +1,4 @@
+interface:
+  display_name: "截图逐项审阅"
+  short_description: "跨应用与项目生成截图对照，支持长页分段、叠加、标点与意见导出"
+  default_prompt: "使用 $screenshot-review 为当前应用或项目生成完整截图对照，按项目和版本保存，提供可标点导出意见的审阅页。"

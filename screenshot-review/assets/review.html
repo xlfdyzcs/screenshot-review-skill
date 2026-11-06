@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>__TITLE__</title>
+  <style>__STYLE__</style>
+</head>
+<body>
+<header id="appHeader" class="app-header">
+  <button id="toggleNav" class="icon-button" aria-expanded="true" aria-controls="reviewSidebar" title="折叠页面清单" aria-label="折叠页面清单">☰</button>
+  <div class="headcopy"><h1>__TITLE__</h1><span id="globalProgress" class="statusline"></span></div>
+  <div class="actions header-actions">
+    <details class="review-info"><summary>项目说明</summary><div class="info-panel"><p>左侧为 __BEFORE_LABEL__，右侧为 __AFTER_LABEL__。按页面编号审阅，修改意见可直接导出。</p><p id="meta"></p><p>← / → 切换分段 · N 打开批注 · F 全屏审图 · Esc 返回</p></div></details>
+    <button id="overviewBtn">全部缩略图</button>
+    <button id="exportBtn" class="primary">导出修改意见</button>
+    <button id="backupBtn">备份批注</button>
+    <button id="importBtn">导入批注</button>
+    <input id="notesFile" type="file" accept="application/json,.json" hidden>
+    <a id="pdfLink" hidden target="_blank">PDF 批注版 ↗</a>
+  </div>
+</header>
+<button id="navBackdrop" class="nav-backdrop" aria-label="关闭页面清单" tabindex="-1"></button>
+<div class="layout">
+  <aside id="reviewSidebar" class="sidebar">
+    <div class="sidebar-copy"><h2>页面清单</h2><input id="search" type="search" aria-label="搜索编号或页面" placeholder="搜索编号 / 页面"><div class="filters"><button data-filter="all" aria-pressed="true">全部</button><button data-filter="change">待修改</button><button data-filter="pending">未审阅</button></div><div id="progress" class="statusline"></div></div>
+    <nav id="nav" aria-label="页面对照清单"></nav>
+  </aside>
+  <main id="reviewMain">
+    <section id="detail" class="detail">
+      <div id="reviewToolbar" class="review-toolbar">
+        <div class="toolbar-heading">
+          <div class="case-heading"><span class="badge" id="caseId"></span><h2 id="caseTitle"></h2><details id="caseInfo" class="case-info"><summary title="查看页面信息与备注" aria-label="页面信息与备注">ⓘ</summary><div class="info-panel"><p id="caseMeta"></p><p id="special" class="note" hidden></p><p id="hint"></p></div></details></div>
+          <div class="actions case-actions"><button id="prev" class="icon-button" aria-label="上一项" title="上一项">‹</button><button id="next" class="icon-button" aria-label="下一项" title="下一项">›</button></div>
+        </div>
+        <div class="controls">
+          <select id="segment" class="segment" aria-label="滚动分段" title="滚动分段"></select>
+          <div class="mode-controls"><button id="pairBtn" aria-pressed="true" title="左右对照">左右</button><button id="overlayBtn" aria-pressed="false" title="叠加比对">叠加</button></div>
+          <label class="overlay-control" id="opacityWrap" hidden>透明度 <input id="opacity" aria-label="右侧透明度" type="range" min="0" max="100" value="50"></label>
+          <button id="syncBtn" aria-pressed="true" title="同步两侧的滚动位置">同步滚动</button>
+          <div class="zoom-controls"><button id="zoomOut" class="icon-button" aria-label="缩小截图" title="缩小截图">−</button><select id="zoom" aria-label="截图缩放" title="百分比以原始图片像素为基准"><option value="fit">适应宽度</option><option value="25">25%</option><option value="50">50%</option><option value="75">75%</option><option value="100">100%</option><option value="125">125%</option><option value="150">150%</option><option value="200">200%</option><option value="300">300%</option></select><button id="zoomIn" class="icon-button" aria-label="放大截图" title="放大截图">＋</button></div>
+          <button id="pinBtn" aria-pressed="false" title="在图上标点">标点</button>
+        </div>
+        <div class="actions viewer-actions"><button id="notesToggle" aria-expanded="false" aria-controls="reviewNotes" title="打开批注（N）"><span id="currentStatus" class="dot"></span>批注<span id="noteCount" class="feedback-count" hidden></span></button><button id="fullscreenBtn" aria-pressed="false" title="全屏审图（F）">全屏审图</button></div>
+      </div>
+      <div id="workspace" class="workspace">
+        <div id="reader" class="reader">
+          <div class="viewstrip"><div class="viewlabel"><span class="tag1"></span><b>__BEFORE_LABEL__</b><a id="raw1" target="_blank">原图 ↗</a></div><div class="viewlabel"><span class="tag3"></span><b>__AFTER_LABEL__</b><a id="raw3" target="_blank">原图 ↗</a></div></div>
+          <div class="screens" id="screens">
+            <div class="shot-pane" id="pane1" tabindex="0" aria-label="__BEFORE_LABEL__截图滚动区"><div class="image-stack" id="stack1"><div class="imagebox" id="box1"><button id="imageAction1" class="image-action" type="button"><img id="image1" class="shot" alt="左侧页面截图"></button></div></div></div>
+            <div class="shot-pane" id="pane3" tabindex="0" aria-label="__AFTER_LABEL__截图滚动区"><div class="image-stack" id="stack3"><div class="imagebox" id="box3"><button id="imageAction3" class="image-action" type="button"><img id="image3" class="shot" alt="右侧页面截图"></button></div></div></div>
+          </div>
+          <nav id="segmentNav" class="segment-nav" aria-label="滚动分段切换"><button id="prevShot" class="segment-arrow previous" aria-label="上一分段" title="上一分段（←）"><span aria-hidden="true">‹</span></button><button id="nextShot" class="segment-arrow next" aria-label="下一分段" title="下一分段（→）"><span aria-hidden="true">›</span></button></nav>
+        </div>
+        <aside id="reviewNotes" class="notes" aria-label="当前页面审阅意见" hidden>
+          <div class="notes-head"><h3 id="noteHeading">本项修改意见</h3><button id="closeNotes" class="icon-button" aria-label="收起批注" title="收起批注">×</button></div>
+          <fieldset id="status" class="review-status"><legend>审阅状态</legend><label class="status-choice"><input type="radio" name="reviewStatus" value="pending" checked><span>未审阅</span></label><label class="status-choice"><input type="radio" name="reviewStatus" value="done"><span>已核对</span></label><label class="status-choice"><input type="radio" name="reviewStatus" value="change"><span>需要修改</span></label></fieldset>
+          <label for="comment" class="comment-label">修改意见</label><textarea id="comment" placeholder="填写修改意见，可先在截图上标点；切换页面自动保存。" aria-label="本项修改意见"></textarea>
+          <span id="saved" class="save" aria-live="polite">意见自动保存；换机器或端口前请备份批注。</span>
+          <div class="pins-heading"><h3>定位标点</h3><button id="clearPins">清除本项标点</button></div><ol id="pins" aria-label="本项标点"></ol>
+        </aside>
+      </div>
+    </section>
+    <section id="overview" class="overview" hidden><h2>全部页面</h2><p>点击任意编号进入原图对照；长页面的全部分段都在对应条目中。</p><div id="grid" class="grid"></div></section>
+  </main>
+</div>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="截图原尺寸预览"><button class="close" id="closeLight">关闭 · Esc</button><img id="large" alt="截图原尺寸预览"></div>
+<script id="review-data" type="application/json">__DATA__</script>
+<script>__SCRIPT__</script>
+</body>
+</html>
